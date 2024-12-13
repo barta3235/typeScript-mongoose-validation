@@ -1,6 +1,7 @@
 import { Schema, model, connect } from 'mongoose';
 
 import {Guardian, LocalGuardian, Student, UserName} from '../student/student.interface'
+import validator from 'validator';
 
 
 // SCHEMA CREATE
@@ -18,7 +19,16 @@ const userNameSchema= new Schema<UserName>({
         }
     },
     middleName: {type:String,trim:true},
-    lastName: {type:String},
+    lastName: {type:String,required:[true,'Last name is required'],
+        validate:{
+            validator:function(value:string){
+                if(validator.isAlphanumeric(value)){
+                    return false;
+                }
+            },
+            message:'{VALUE} is not valid'
+        }
+    },
 })
 
 const guardianSchema= new Schema<Guardian>({
@@ -52,7 +62,17 @@ const StudentSchema= new Schema<Student>({
         required:true,
      },
      dateOfBirth:{type:String},
-     email:{type:String,required:true},
+     email:{type:String,required:true,unique:true,
+        validate:{
+            validator:function(value){
+                 if(validator.isEmail(value)){
+                    return true
+                 }
+                 return false
+            },
+            message:'{VALUE} is not a valid email type'
+        }
+     },
      contactNo:{type:String,required:true},
      emergencyContact:{type:String},
      //  enum

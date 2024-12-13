@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { StudentServices } from "./student.service";
-
+import Joi from 'joi'
 
 const createStudent= async(req:Request,res:Response)=>{
      try{
         //send response
        // we can brin data using param, query and body
      const student= req.body.student;
+
 
 
      // will call the service function to send this data
