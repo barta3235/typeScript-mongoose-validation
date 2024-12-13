@@ -5,7 +5,18 @@ import {Guardian, LocalGuardian, Student, UserName} from '../student/student.int
 
 // SCHEMA CREATE
 const userNameSchema= new Schema<UserName>({
-    firstName: {type:String,required:[true,'First name mention is mandatory'],maxlength:[20,'Length must be less than 20'],trim:true},
+    firstName: {type:String,required:[true,'First name mention is mandatory'],maxlength:[20,'Length must be less than 20'],trim:true,
+        validate: {
+            validator:function(value:string){
+                const firstNameValueStr= value.charAt(0).toUpperCase() + value.slice(1)
+                if(value !== firstNameValueStr){
+                     return false
+                }
+                return true
+            },
+            message:'{VALUE} is not in capitalized format'
+        }
+    },
     middleName: {type:String,trim:true},
     lastName: {type:String},
 })
