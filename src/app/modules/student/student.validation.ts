@@ -15,8 +15,7 @@ const StudentJoiValidationSchema = Joi.object({
         lastName: Joi.string().max(20)
     },
     gender: Joi.string().required().valid('male','female','other'), 
-    localGuardian:LocalGuardianJoiValidateSchema.required()
-       
+    localGuardian:LocalGuardianJoiValidateSchema.required()     
 })
 
 export default StudentJoiValidationSchema
